@@ -18,6 +18,7 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_product.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_product.mk)
 
+ifeq ($(CUSTOM_BUILD),)
 # Default AOSP sounds
 $(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)
 
@@ -25,7 +26,9 @@ $(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.config.ringtone?=Ring_Synth_04.ogg \
     ro.config.notification_sound?=pixiedust.ogg \
-    ro.com.android.dataroaming?=true \
+    ro.com.android.dataroaming?=true
+
+endif
 
 # More AOSP packages
 PRODUCT_PACKAGES += \
@@ -34,7 +37,9 @@ PRODUCT_PACKAGES += \
     preinstalled-packages-platform-aosp-product.xml \
     WallpaperPicker \
 
+ifeq ($(CUSTOM_BUILD),)
 # Telephony:
 #   Provide a APN configuration to GSI product
 PRODUCT_COPY_FILES += \
     device/sample/etc/apns-full-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml
+endif
